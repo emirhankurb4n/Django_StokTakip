@@ -1,0 +1,320 @@
+{% load widget_tweaks %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Ekipman Detayları</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body class="bg-blue">
+    <header>
+        {% include 'partials/_navbar.html' %}
+    </header>
+
+    <main>
+
+        <div class="container bg-light mt-5">
+
+            <div class="row border border-dark p-5">
+                
+
+                <div class="row justify-content-end">
+                    <div class="col-1 text-end">
+                        <a class="text-danger" style="text-decoration: none;" href="/home"><h1 class="hoverable">X</h1></a>
+                    </div>
+                </div> 
+                
+                <div class="col-6 row align-items-center ">
+                    <h3 class="pb-3">Ekipman Bilgileri</h3>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Ekipman Adı :</label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.ekipmanAdi}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Ekipman Türü : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.ekipmanTuru}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Ekipman Konumu :</label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.ekipmanKonumu}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">İlişkili Olduğu Makine :</label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">
+                                {% if ekipman.iliskiliMakine %}
+                                {{ekipman.iliskiliMakine}}
+                                {% else %}
+                                İlişkili Makine Yok.
+                                {% endif %}
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Ekipman Toplam Stok Adedi : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.ekipmanVarlikStokMiktari}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Aktif Ekipman Stok Adedi : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.kullanilanMiktar}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Erişilebilir Ekipman Stok Adedi : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.kullanilabilirMiktar}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Arızalı Ekipman Stok Adedi :</label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label"> {{ekipman.arizaliMiktar}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Tedarikçi : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.tedarikciFirma}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Ekipman Markası : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.ekipmanMarkasi}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Ekleyen Personel : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.ekleyenPersonel}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Eklenme Tarihi : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">{{ekipman.eklenmeTarihi}}</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Son Güncelleyen Personel : </label>
+                        </div>
+                        <div class="col">
+                            {% if ekipman.sonGuncellenmeTarihi %}
+                            {{ekipman.sonGuncelleyenPersonel}}
+
+                            {% else %}
+                            Güncelleme verisi yok.
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <label class="form-label">Son Güncellenme Tarihi : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">
+
+                                {% if ekipman.sonGuncellenmeTarihi %}
+                                {{ekipman.sonGuncellenmeTarihi}}
+
+                                {% else %}
+                                Güncelleme verisi yok.
+                                {% endif %}
+
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row pt-5">
+                        <div class="col">
+                            <label class="form-label">Ekipman Açıklaması : </label>
+                        </div>
+                        <div class="col">
+                            <label class="form-label">Ekipman Resmi : </label>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col">
+
+                            <textarea class="form-control" rows="7" readonly>
+                                    {% if ekipman.ekipmanAciklamasi %}
+                                    {{ekipman.ekipmanAciklamasi}}
+                                    {% else %}
+                                       Açıklama yok.
+                                    {% endif %}
+                                </textarea>
+
+                        </div>
+                        <div class="col">
+                            <img {% if ekipman.ekipmanResmi %} src="{{ ekipman.ekipmanResmi.url }}" {% endif %}
+                                alt="Resim Yok">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 row align-items-center">
+
+                    <div class="row">
+
+                        <div class="alert alert-primary my-2">
+
+                            <label class="form-label">Aktiflik Durumu = 
+                                
+                                {% if ekipman.aktiflikDurumu == 1 %}
+                                    Aktif
+                                {% else %}
+                                    Pasif
+                                {% endif %}
+                                    
+                                
+                            </label>
+
+                            <form method="post" class="row align-items-center">
+                                {% csrf_token %}
+                                <div class="col-6">
+                                    <label class="form-check-label">Aktiflik Durumunu Değiştir  ---></label>
+                                </div>
+                                <div class="col">
+                                    {% render_field form.aktiflikDurumu class="form-check-input p-3" id="aktiflikCheckbox" %}
+                                </div>
+                                <div class="col">
+                    
+                                   <input id="submitBtn" type="submit" class="btn btn-primary px-5" value="Kaydet"></div>
+                                 
+                                </form>
+                               
+
+                        </div>
+
+
+                        {% if ekipman.aktiflikDurumu == 1 %}
+                        <a href="{% url 'Update' ekipman.id %}" class="btn btn-success col-12 my-2 py-5">
+                            <h3>Ekipman Bilgilerini Güncelle</h3>
+                        </a>
+                        <a class="btn btn-danger col-12 my-2 py-5" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalDelete">
+                            <h3> Ekipman Bilgilerini Sil</h3>
+                        </a>
+                        {% else %}
+                        <a href="{% url 'Update' ekipman.id %}" class="btn btn-success col-12 my-2 py-5 disabled">
+                            <h3>Ekipman Bilgilerini Güncelle</h3>
+                        </a>
+                        <a class="btn btn-danger col-12 my-2 py-5 disabled" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalDelete">
+                            <h3> Ekipman Bilgilerini Sil</h3>
+                        </a>
+                        {% endif %}
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalDelete" tabindex="-1"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Onay</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>Ekipman bilgilerini silmek üzeresiniz devam etmek istediğinize emin
+                                            misiniz?</h3>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <a href="{% url 'Delete' ekipman.pk %}" class="btn btn-danger px-4"> Sil</a>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Geri
+                                            Dön</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+        <script>
+            // Sayfa yüklendiğinde ve checkbox durumu değiştiğinde bu fonksiyonu çalıştır
+            window.onload = function() 
+            {
+                checkCheckboxAndEnableButton(); // Sayfa yüklendiğinde durumu kontrol et
+                document.getElementById("aktiflikCheckbox").addEventListener("change", function() {
+                    checkCheckboxAndEnableButton(); // Checkbox durumu değiştiğinde durumu kontrol et
+                });
+            };
+        
+            function checkCheckboxAndEnableButton() 
+            {
+                // Checkbox'un durumunu ve ekipman.aktiflikDurumu'nu kontrol et
+                var checkbox = document.getElementById("aktiflikCheckbox");
+                var submitBtn = document.getElementById("submitBtn");
+                if (checkbox.checked && "{{ ekipman.aktiflikDurumu }}" == 'True' || !checkbox.checked && "{{ ekipman.aktiflikDurumu }}" == 'False' ) {
+                    // Eğer checkbox işaretli ve ekipman.aktiflikDurumu true ise butonu etkinleştir
+                    submitBtn.setAttribute("disabled", "disabled");
+                } else {
+                    // Aksi takdirde butonu devre dışı bırak
+                    submitBtn.removeAttribute("disabled");
+                }
+            }
+        </script>
+</body>
+
+</html>
