@@ -1,0 +1,150 @@
+{% load widget_tweaks %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Ekipman Ekle</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body>
+    <header>
+        {% include 'partials/_navbar.html' %}
+    </header>
+    <main>
+
+        <div class="container">
+            <div class="row  justify-content-center">
+                
+
+                <form class="row g-3 col-7 rounded bg-dark text-light p-4 py-5" action="{% url 'CreateEkipman' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row justify-content-end">
+                        <div class="col-1 text-end">
+                            <a class="text-danger" style="text-decoration: none;" href="/home"><h1 class="hoverable">X</h1></a>
+                        </div>
+                    </div> 
+
+                    <h1 class="text-center">Ekipman Ekle</h1>
+
+                        {% if error %}
+                        <div class="alert alert-danger"> {{error}} </div>
+                        {% endif %}
+
+                    <div class="col-md-6">
+                        <label class="form-label">Ekipman Adı :</label>
+                        {% render_field form.ekipmanAdi class="form-control" placeholder="Ekipman Adı" %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Ekipman Markası :</label>
+                        {% render_field form.ekipmanMarkasi class="form-control" placeholder="Ekipman Markası" %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Ekipman Kategorisi :</label>
+                        <div class="row">
+                            <div class="col-10 pe-0">
+                                {% render_field form.ekipmanTuru class="form-control" %}
+                            </div>
+                            <div class="col-1">
+                                <a href="{% url 'CreateKategori' %}?linkkontrol=True" class="btn btn-success hoverable-new-button">+</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label class="form-label">Ekipman Konumu :</label>
+                        <div class="row">
+                            <div class="col-10 pe-0">
+                                {% render_field form.ekipmanKonumu class="form-control" %}
+                            </div>
+                            <div class="col-1">
+                                <a href="{% url 'CreateKonum' %}?linkkontrol=True" class="btn btn-success hoverable-new-button">+</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <label class="form-label">İlişkili Makine :</label>
+                        <div class="row">
+                            <div class="col-10 pe-0">
+                                {% render_field form.iliskiliMakine class="form-control" %}
+                            </div>
+                            <div class="col-1">
+                                <a href="{% url 'CreateMakine' %}?linkkontrol=True" class="btn btn-success hoverable-new-button">+</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Tedarikçi :</label>
+                        <div class="row">
+                            <div class="col-10 pe-0">
+                                {% render_field form.tedarikciFirma class="form-control" %}
+                            </div>
+                            <div class="col-1">
+                                <a href="{% url 'CreateTedarikci' %}?linkkontrol=True" class="btn btn-success hoverable-new-button">+</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Aktif Ekipman Stoğu :</label>
+                        {% render_field form.kullanilanMiktar value="0" name="kullanilanMiktar" class="form-control" placeholder="Kullanılan Ekipman Stoğu" %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Erişilebilir Ekipman Stoğu :</label>
+                        {% render_field form.kullanilabilirMiktar value="0" name="kullanilabilirMiktar" class="form-control" placeholder="Kullanılabilir Ekipman Stoğu" %}
+                    </div>                   
+
+                    <div class="col-md-6">
+                        <label class="form-label">Arızalı Ekipman Stoğu :</label>
+                        {% render_field form.arizaliMiktar value="0" name="arizaliMiktar" class="form-control" placeholder="Arızalı Ekipman Stoğu" %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Ekipmanın Resmi :</label>
+                        {% render_field form.ekipmanResmi class="form-control" %}
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Ekipman Açıklaması :</label>
+                        {% render_field form.ekipmanAciklamasi class="form-control" placeholder="Açıklama (İsteğe Bağlı)" %}
+                    </div>
+
+                    {% render_field form.ekipmanVarlikStokMiktari type="hidden" value="0" %}
+                    {% render_field form.eklenmeTarihi %}
+                    {% render_field form.ekleyenPersonel %}
+                    {% render_field form.aktiflikDurumu type="hidden" value="True" %}
+
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-primary col-12 mt-2" value="Ekipman Ekle">
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </main>
+            <!-- place footer here -->
+            {% include 'partials/_footer.html' %}
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

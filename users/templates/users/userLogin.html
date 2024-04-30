@@ -1,0 +1,77 @@
+{% load widget_tweaks %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+        {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body class="bg-dark">
+    <header>
+        <!-- place navbar here -->
+    </header>
+    <main>
+
+        <div class="container">
+
+            <div class="row justify-content-center mt-5">
+
+                <div class="col-4 mt-5 text-light p-5 rounded border border-light">
+
+                    <form method="POST">
+
+                        <h2 class="text-center pb-3">Login Envanter App</h2>
+                        {% csrf_token %}
+
+                        {% if error %}
+                        <div class="alert alert-danger"> {{error}} </div>
+                        {% endif %}
+
+                        <div class="mb-3">
+                            <label class="form-label">Username</label>
+                            {% render_field form.username class="form-control" placeholder="Username" %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Password</label>
+                            {% render_field form.password class="form-control" placeholder="Password" %}
+                        </div>
+
+                        <div class="mb-3">
+
+                            <input type="submit" value="Login" class="btn btn-primary p-3 my-2 col-12">
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,81 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+<nav class="navbar navbar-expand-lg bg-body-tertiary p-4" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'Home' %}"><h4>EnvanterStokTakip</h4></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link mx-2 {% if request.path == '/home' %}active{% endif %}" aria-current="page" href="{% url 'Home' %}">Ana Sayfa</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Tüm İşlemler
+            </a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item {% if request.path == '/kategoriIndex' %}active{% endif %}" href="{% url 'KategoriIndex' %}"><h6>Kategori İşlemleri</h6> </a></li>
+              <li><a class="dropdown-item {% if request.path == '/tedarikciIndex' %}active{% endif %}" href="{% url 'TedarikciIndex' %}"><h6>Tedarikçi İşlemleri</h6></a></li>
+              <li><a class="dropdown-item {% if request.path == '/konumIndex' %}active{% endif %}" href="{% url 'KonumIndex' %}"><h6>Konum İşlemleri</h6></a></li>
+              <li><a class="dropdown-item {% if request.path == '/makineIndex' %}active{% endif %}" href="{% url 'MakineIndex' %}"><h6>Makine İşlemleri</h6></a></li>
+            </ul>
+          </li>
+          
+        </ul>
+        
+        
+        {% if request.path == '/home' or request.path == '/kategoriIndex' or request.path == '/konumIndex' or request.path == '/tedarikciIndex' or request.path == '/makineIndex' %}
+          <form class="d-flex me-5 border border-dark p-2" role="search">
+
+            <input class="form-control me-2" type="search" name="search" aria-label="Search"
+             placeholder="{% if request.path == '/home' %}Ekipman{% elif request.path == '/kategoriIndex' %}Kategori{% elif request.path == '/tedarikciIndex' %}Tedarikçi{% elif request.path == '/konumIndex' %}Konum{% elif request.path == '/makineIndex' %}Makine{% endif %} Adıyla Arama"
+             {% if searchQuery %}value="{{searchQuery}}"{% endif %}>
+            
+            <button class="btn btn-outline-success" type="submit" name="form_submit">Search</button>
+
+          </form>
+        {% endif %}
+        {% if request.user.is_authenticated %}
+          <div class="dropdown">
+            <a class="btn btn-outline-secondary dropdown-toggle py-2" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-fill"></i> 
+               {{request.user.get_full_name}}
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="userDropdown">
+              <li><a class="dropdown-item {% if request.path == '/myProfile' %}active{% endif %}" href="{% url 'MyProfile' %}"><i class="bi bi-person-fill pe-2"></i>Profilim</a></li>
+              
+              {% if request.user.is_superuser %}
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/admin/">Admin Paneli</a></li>
+              {% endif %}
+                
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="bi bi-box-arrow-left pe-2"> </i> Çıkış Yap</a></li>
+            </ul>
+          </div>
+          {% else %} <a href="{% url 'Login' %}">Please Login</a> {% endif %}
+  
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content bg-light">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Onay</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body ">
+                  <h3>Çıkış yapmak üzeresiniz devam etmek istediğinize emin misiniz?</h3>
+                </div>
+                <div class="modal-footer">
+                  <a href="{% url 'Logout' %}" class="btn btn-danger">Çıkış Yap</a>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Geri Dön</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </nav>

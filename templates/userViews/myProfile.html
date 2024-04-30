@@ -1,0 +1,252 @@
+{% load widget_tweaks %}
+<!doctype html>
+<html lang="en">
+<head>
+    <title>My Profile</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous"
+    />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body class="bg-lightblue">
+    <header>
+        {% include 'partials/_navbar.html' %}
+    </header>
+    <main>
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="profile-card-4 z-depth-3">
+                        <div class="card">
+                            <div class="card-body text-center bg-dark rounded-top">
+                                <div class="user-box">
+                                    <img class="img-fluid" {% if request.user.profile_photo %} src="{{ request.user.profile_photo.url }}" {% endif %} alt="Profil Resmi Yok">
+                                </div>
+                                <h5 class="mb-1 text-white">
+                                    {{user.get_full_name}}
+                                </h5>
+                                <h6 class="text-light">{{user.title}}</h6>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group shadow-none">
+                                    <li class="list-group-item">
+                                        <div class="list-icon">
+                                            <i class="fa fa-phone-square"></i>
+                                        </div>
+                                        <div class="list-details">
+                                            <span>{{user.phone_number}}</span>
+                                            <small>Mobile Number</small>
+                                        </div>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <div class="list-icon">
+                                            <i class="fa fa-envelope"></i>
+                                        </div>
+                                        <div class="list-details">
+                                            <span> {{user.email}}</span>
+                                            <small>Email Address</small>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card z-depth-3">
+                        <div class="card-body">
+                            <ul class="nav nav-pills nav-pills-primary nav-justified">
+                                <li class="nav-item">
+                                    <a href="#profile" data-toggle="pill" class="nav-link active show"><i class="icon-user"></i> <span class="hidden-xs">Profile</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#edit" data-toggle="pill" class="nav-link"><i class="icon-note"></i> <span class="hidden-xs">Edit</span></a>
+                                </li>
+                            </ul>
+                            <div class="tab-content p-3">
+                                <div class="tab-pane active show" id="profile">
+
+                                    {% if messages %}
+                                         
+                                           {% for message in messages %}
+                                            
+                                             <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                                                {{ message }}
+                                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                            </div>
+                                           {% endfor %}
+                                         
+                                    {% endif %}
+                                    <h5 class="mb-3">User Profile</h5>
+                                    <div class="row">
+                                        
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Username :</label>
+                                            <div class="col-lg-9 col-form-label form-control-label">
+                                                {{user.username}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">First name :</label>
+                                            <div class="col-lg-9 col-form-label form-control-label">
+                                                {{user.first_name}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Last name :</label>
+                                            <div class="col-lg-9 col-form-label form-control-label">
+                                                {{user.last_name}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Email :</label>
+                                            <div class="col-lg-9 col-form-label form-control-label">
+                                                {{user.email}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Phone Number :</label>
+                                            <div class="col-lg-9 col-form-label form-control-label">
+                                                {{user.phone_number}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Ünvan :</label>
+                                            <div class="col-lg-9 col-form-label form-control-label">
+                                                {{user.title}}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Address :</label>
+                                            <div class="col-lg-9 col-form-label form-control-label">
+                                                <textarea class="form-control" rows="3" readonly>{% if user.address %}{{user.address}}{% else %}Adres bilgisi yok.{% endif %}</textarea>
+                                            </div>
+                                        </div>
+                      
+                                    </div>
+                                    <!--/row-->
+                                </div>
+                                <div class="tab-pane" id="edit">
+                                    <form method="POST" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label" >First name</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.first_name class="form-control" readonly="True" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Last name</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.last_name class="form-control" readonly="True" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Email</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.email class="form-control" placeholder="E-Mail" %}
+                                            </div>
+                                        </div>
+                                    
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Phone Number</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.phone_number class="form-control" placeholder="0-(5xx)-(xxx)-(xxxx)" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Change profile photo</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.profile_photo class="form-control" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Ünvan</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.title class="form-control" placeholder="Ünvan" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Address</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.address class="form-control" placeholder="Adress" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Username</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.username class="form-control" placeholder="Username" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Current password</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.current_password class="form-control" placeholder="Password" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">New password</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.new_password class="form-control" placeholder="New Password" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row mb-2">
+                                            <label class="col-lg-3 col-form-label form-control-label">Confirm password</label>
+                                            <div class="col-lg-9">
+                                                {% render_field form.confirm_password class="form-control" placeholder="Confirm New Password" %}
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-3 col-form-label form-control-label"></label>
+                                            <div class="col-lg-9">
+                                                <input type="reset" class="btn btn-secondary" value="Cancel">
+                                                <input type="submit" class="btn btn-primary" value="Save Changes">
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+        <!-- place footer here -->
+        {% include 'partials/_footer.html' %}
+
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Tab geçişlerini dinamik olarak yönetmek için jQuery kullanımı
+            $('.nav-link').on('click', function() {
+                $('.nav-link').removeClass('active show');
+                $(this).addClass('active show');
+                var target = $(this).attr('href');
+                $('.tab-pane').removeClass('active show');
+                $(target).addClass('active show');
+            });
+        });
+    </script>
+</body>
+</html>
+
+

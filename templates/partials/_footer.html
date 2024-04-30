@@ -1,0 +1,56 @@
+{% load widget_tweaks %}
+    <footer class="footer-bs">
+        <div class="row">
+        	<div class="col-md-3 footer-brand animated fadeInLeft">
+            	<h2>EnvanterStokTakip</h2>
+                <p>Suspendisse hendrerit tellus laoreet luctus pharetra. Aliquam porttitor vitae orci nec ultricies. Curabitur vehicula, libero eget faucibus faucibus, purus erat eleifend enim, porta pellentesque ex mi ut sem.</p>
+                <p>© 2024 BS3 UI Kit, All rights reserved</p>
+            </div>
+        	<div class="col-md-4 footer-nav animated fadeInUp">
+            	<h4>Menu —</h4>
+            	<div class="row">
+                    <ul class="pages col-6">
+                        <li class="mt-2 ms-4"><a href="{% url 'Home' %}">Ekipmanlar</a></li>
+                        <li class="mt-2 ms-4"><a href="{% url 'KategoriIndex' %}">Kategoriler</a></li>
+                        <li class="mt-2 ms-4"><a href="{% url 'KonumIndex' %}">Konumlar</a></li>
+                        <li class="mt-2 ms-4"><a href="{% url 'TedarikciIndex' %}">Tedarikçiler</a></li>
+                        <li class="mt-2 ms-4"><a href="{% url 'MakineIndex' %}">Makineler</a></li>
+                    </ul>
+                    <ul class="pages col-4 animated fadeInUp">
+                        <li class="mt-2"><a href="{% url 'CreateEkipman' %}">Ekipman Ekle</a></li>
+                        <li class="mt-2"><a href="{% url 'CreateKategori' %}">Kategori Ekle</a></li>
+                        <li class="mt-2"><a href="{% url 'CreateKonum' %}">Konum Ekle</a></li>
+                        <li class="mt-2"><a href="{% url 'CreateTedarikci' %}">Tedarikçi Ekle</a></li>
+                        <li class="mt-2"><a href="{% url 'CreateMakine' %}">Makine Ekle</a></li>
+                    </ul>
+                </div>
+            	
+            </div>
+        
+        	<div class="col-md-5 footer-ns animated fadeInRight">
+                <div class="col-8 offset-md-2">
+            	    <h4>Hata Bildir</h4>
+                    <p>Herhangi bir hata ile karşılaştıysanız kısa ve açıklayıcı bir biçimde bizimle paylaşabilirsiniz. Kullanıcı deneyimini önemsiyoruz.</p>
+                    
+                    {% if request.path == '/home' %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <p>
+                            <div class="input-group">
+                              {% render_field form1.aciklama class="form-control" placeholder="Burayı doldurun..." %}
+                              {% render_field form1.cozulmeDurumu value="False" %}
+                              {% render_field form1.eklenmeTarihi %}
+                              {% render_field form1.ekleyenPersonel %}
+                              <span class="input-group-btn">
+                                <button class="btn btn-light" type="submit" name="form1_submit"><span class="bi bi-envelope-fill"></span></button>
+                              </span>
+                            </div><!-- /input-group -->
+                        </p>
+                   </form>
+                   {% else %}
+                   Hata Bildirmek İçin Lütfen <a href="{% url 'Home' %}">Ana Sayfaya</a> Gidiniz.
+                   {% endif %}
+                </div>
+            </div>
+        </div>
+    </footer>
