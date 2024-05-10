@@ -1,0 +1,183 @@
+{% load widget_tweaks %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Ana Sayfa</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+
+<body class="bg-lightblue">
+    <header>
+        {% include 'partials/_navbar.html' %}
+    </header>
+    <main>
+
+        <div class="container pt-5">
+                {% if messages %}
+                                                 
+                    {% for message in messages %}
+                     
+                      <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+                         {{ message }}
+                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                     </div>
+                    {% endfor %}
+                                                 
+                {% endif %}
+        
+        
+            <div class="row my-3">
+                <div class="col-10 text-light">
+                    <h1>Ekipmanlar</h1>
+                </div>
+                <div class="col-2">
+                    <a class="btn btn-success p-3 col-12" href="{% url 'CreateEkipman' %}">Yeni Ekipman Ekle</a>
+                </div>
+            </div>
+
+            {% if ekipmanlar %}
+            <table class="table border border-dark table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">Kayıt NO : <a {% if sayac == 0 %} href="{% url 'Home' %}?sirala=id" {% else %} href="{% url 'Home' %}?sirala=id_ters" {% endif %} class="btn border p-1">></a></th>
+                        <th scope="col">Ekipman Adı  <a {% if sayac == 0 %} href="{% url 'Home' %}?sirala=ekipmanAdi" {% else %} href="{% url 'Home' %}?sirala=ekipmanAdi_ters" {% endif %} class="btn border p-1">></a></th>
+                        <th scope="col">Ekipman Türü  <a {% if sayac == 0 %} href="{% url 'Home' %}?sirala=ekipmanTuru" {% else %} href="{% url 'Home' %}?sirala=ekipmanTuru_ters" {% endif %} class="btn border p-1">></a></th>
+                        <th scope="col">Ekipman Konumu  <a {% if sayac == 0 %} href="{% url 'Home' %}?sirala=ekipmanKonumu" {% else %} href="{% url 'Home' %}?sirala=ekipmanKonumu_ters" {% endif %} class="btn border p-1">></a></th>
+                        <th scope="col">Eklenme Tarihi <a {% if sayac == 0 %} href="{% url 'Home' %}?sirala=eklenmeTarihi" {% else %} href="{% url 'Home' %}?sirala=eklenmeTarihi_ters" {% endif %} class="btn border p-1">></a></th>
+                        <th scope="col">Aktiflik Durumu  <a {% if sayac == 0 %} href="{% url 'Home' %}?sirala=aktiflikDurumu" {% else %} href="{% url 'Home' %}?sirala=aktiflikDurumu_ters" {% endif %} class="btn border p-1">></a></th>
+                        <td scope="col">
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal1">
+                                Filtre Uygula
+                            </button>
+                            
+                            {% if filtre == True %}
+                               <a href="{% url 'Home' %}" class="btn btn-danger hoverable1">X</a>
+                            {% endif %}
+                                
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Filtrele</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        
+                                            <form method="post">
+                                                <div class="modal-body">
+                                                {% csrf_token %}
+                                                   <div class="row">
+                                                    <div class="col-md-6 p-2">
+                                                        <label class="form-label">Ekipman Adı:</label>
+                                                        {% render_field form.ekipman_adi class="form-control" placeholder="Ekipman Adı" %}
+                                                    </div>
+                                                    <div class="col-md-6 p-2">
+                                                        <label class="form-label">Ekipman Markası:</label>
+                                                        {% render_field form.ekipman_markasi class="form-control" placeholder="Ekipman Markası" %}
+                                                    </div>
+
+                                                    <div class="col-md-6 p-2">
+                                                        <label class="form-label">Ekipman Konumu:</label>
+                                                        {% render_field form.ekipman_konumu class="form-control" %}
+                                                    </div>
+                                                    <div class="col-md-6 p-2">
+                                                        <label class="form-label">Ekipman Türü:</label>
+                                                        {% render_field form.ekipman_turu class="form-control" %}
+                                                    </div>
+
+                                                    <div class="col-md-6 p-2">
+                                                        <label class="form-label">Tedarikçi:</label>
+                                                        {% render_field form.tedarikci_firma class="form-control" %}
+                                                    </div>
+                                                    <div class="col-md-6 p-2">
+                                                        <label class="form-label">Aktiflik Durumu :</label>
+                                                        {% render_field form.aktiflik_durumu %}
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                                    <button type="submit" name="form_submit" class="btn btn-primary">Filtrele</button>
+                                                </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    {% for ekipman in ekipmanlar %}
+                    <tr>
+                        <th class="align-middle" scope="row">{{ekipman.id}}</th>
+                        <td class="align-middle">{{ekipman.ekipmanAdi}}</td>
+                        <td class="align-middle">{{ekipman.ekipmanTuru}}</td>
+                        <td class="align-middle">{{ekipman.ekipmanKonumu}}</td>
+                        <td class="align-middle">{{ekipman.eklenmeTarihi}}</td>
+                        <td class="align-middle">
+
+                            {% if ekipman.aktiflikDurumu == 1 %}
+                            Aktif
+                            {% else %}
+                            Pasif
+                            {% endif %}
+
+                        </td>
+                        <td> <a href="{% url 'EkipmanDetails' ekipman.pk %}"
+                                class="btn btn-link link-dark align-middle link-underline-opacity-25 link-underline-opacity-100-hover">Detayları
+                                Göster</a></td>
+                    </tr>
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="row justify-content-center">
+                <div class="alert alert-primary text-center col-6 mt-5">
+                    Herhangi bir ekipman bulunamadı...
+                    
+                    {% if filtre == True %}
+                        <a href="{% url 'Home' %}">Geri Dön</a>
+                    {% endif %}
+                        
+                </div>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+    </main>
+        <!-- place footer here -->
+        {% include 'partials/_footer.html' %}
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
